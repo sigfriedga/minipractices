@@ -1,0 +1,55 @@
+<script>
+    let tablero = ["_", "_", "_", "_", "_", "_", "_", "_", "_"];
+
+    let jugada = 0;
+    isJugador1 = true;
+    let isFinish = false;
+
+    const evaluateWin = () => {
+        //Horizontales
+        if (tablero[0] == tablero[1] && tablero[0] == tablero[2] && tablero[0] != "_") {
+            return true;
+        } else if (tablero[3] == tablero[4] && tablero[3] == tablero[5] && tablero[3] != "_") {
+            return true;
+        } else if (tablero[6] == tablero[7] && tablero[6] == tablero[8] && tablero[6] != "_") {
+            return true;
+            //Verticales
+        } else if (tablero[0] == tablero[3] && tablero[0] == tablero[6] && tablero[0] != "_") {
+            return true;
+        } else if (tablero[1] == tablero[4] && tablero[1] == tablero[7] && tablero[1] != "_") {
+            return true;
+        } else if (tablero[2] == tablero[5] && tablero[2] == tablero[8] && tablero[2] != "_") {
+            return true;
+            //Diagonales
+        } else if (tablero[0] == tablero[4] && tablero[0] == tablero[8] && tablero[0] != "_") {
+            return true;
+        } else if (tablero[2] == tablero[4] && tablero[2] == tablero[6] && tablero[2] != "_") {
+            return true;
+        }
+        return false;
+    }
+
+    const printBoard = () => {
+        alert(tablero[0] + "|" + tablero[1] + "|" + tablero[2] + "\n" +
+            tablero[3] + "|" + tablero[4] + "|" + tablero[5] + "\n" +
+            tablero[6] + "|" + tablero[7] + "|" + tablero[8]);
+    }
+
+    while (!isFinish) {
+        let select = prompt("Introduzca un número del 0 al 8");
+        if (isJugador1) {
+            tablero[select] = "X";
+        } else {
+            tablero[select] = "O";
+        }
+        printBoard();
+
+        isFinish = evaluateWin();
+
+        if (isFinish == true) {
+            alert("Jugardor" + " ha hanado!")
+        } else {
+            isJugador1 = !isJugador1;
+        }
+    }
+</script>
