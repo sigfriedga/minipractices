@@ -1,55 +1,34 @@
 <script>
-    let tablero = ["_", "_", "_", "_", "_", "_", "_", "_", "_"];
-
-    let jugada = 0;
-    isJugador1 = true;
-    let isFinish = false;
-
-    const evaluateWin = () => {
-        //Horizontales
-        if (tablero[0] == tablero[1] && tablero[0] == tablero[2] && tablero[0] != "_") {
-            return true;
-        } else if (tablero[3] == tablero[4] && tablero[3] == tablero[5] && tablero[3] != "_") {
-            return true;
-        } else if (tablero[6] == tablero[7] && tablero[6] == tablero[8] && tablero[6] != "_") {
-            return true;
-            //Verticales
-        } else if (tablero[0] == tablero[3] && tablero[0] == tablero[6] && tablero[0] != "_") {
-            return true;
-        } else if (tablero[1] == tablero[4] && tablero[1] == tablero[7] && tablero[1] != "_") {
-            return true;
-        } else if (tablero[2] == tablero[5] && tablero[2] == tablero[8] && tablero[2] != "_") {
-            return true;
-            //Diagonales
-        } else if (tablero[0] == tablero[4] && tablero[0] == tablero[8] && tablero[0] != "_") {
-            return true;
-        } else if (tablero[2] == tablero[4] && tablero[2] == tablero[6] && tablero[2] != "_") {
-            return true;
-        }
-        return false;
+    String.prototype.replaceAt = function (index, character) {
+        return this.substring(0, index) + character + this.substring(index + character.length);
     }
 
-    const printBoard = () => {
-        alert(tablero[0] + "|" + tablero[1] + "|" + tablero[2] + "\n" +
-            tablero[3] + "|" + tablero[4] + "|" + tablero[5] + "\n" +
-            tablero[6] + "|" + tablero[7] + "|" + tablero[8]);
-    }
+    let palabras = ["jamon", "zapatilla", "rosquilla", "motosierra"];
+    let palabraSecreta = palabras[Math.floor(Math.random() * palabras.length)];
+    let isWin = false;
+    let isAcierto = false;
 
-    while (!isFinish) {
-        let select = prompt("Introduzca un número del 0 al 8");
-        if (isJugador1) {
-            tablero[select] = "X";
-        } else {
-            tablero[select] = "O";
+    let palabraConGuiones = palabraSecreta.replace(/./g, "_ ");
+
+    alert(palabraSecreta);
+    while (!isWin) {
+
+        let letra = prompt("Introduce una letra; por favor");
+        isAcierto = false;
+        for (i = 0; i < palabraSecreta.length; i++) {
+
+            if (letra == palabraSecreta.charAt(i)) {
+                palabraConGuiones = palabraConGuiones.replaceAt(i * 2, letra);
+                isAcierto = true;
+            }
         }
-        printBoard();
-
-        isFinish = evaluateWin();
-
-        if (isFinish == true) {
-            alert("Jugardor" + " ha hanado!")
-        } else {
-            isJugador1 = !isJugador1;
+        if (isAcierto == false) {
+            alert('No se encuentra esta letra, intentalo de nuevo!')
+        }
+        alert(palabraConGuiones);
+        if (palabraConGuiones.indexOf("_") == -1) {
+            isWin = true;
         }
     }
+    alert("Hemos ganado");
 </script>
